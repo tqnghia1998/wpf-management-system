@@ -1,0 +1,92 @@
+﻿<Window x:Class="Management_System.Dialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Management_System"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        Loaded="Window_Loaded"
+        Width="340" Height="220"
+        Title="Thông báo">
+    
+    <!--Chọn hình nền-->
+    <Window.Background>
+        <ImageBrush ImageSource="../Images/Login/Background.png"/>
+    </Window.Background>
+
+    <Grid>
+        <!--Action Bar-->
+        <materialDesign:ColorZone
+            MouseDown="ColorZone_MouseDown"
+            Mode="Dark"
+            Padding="5"
+            materialDesign:ShadowAssist.ShadowDepth="Depth2">
+            <Grid Height="20">
+                <!--Tiêu đề-->
+                <TextBlock
+                    Text="Thông báo"
+                    FontSize="15"
+                    FontFamily="Sitka Subheading"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"/>
+                <!--Button Close-->
+                <Button
+                    Click="CloseButton_Click"
+                    Height="20" Width="20"
+                    BorderBrush="OrangeRed"
+                    Opacity="0.8"
+                    Background="OrangeRed"
+                    HorizontalAlignment="Right"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+                    <materialDesign:PackIcon
+                        Kind="Close" Height="15" Width="15"/>
+                </Button>
+            </Grid>
+        </materialDesign:ColorZone>
+
+        <!--Nội dung thông báo-->
+        <TextBlock Name="txtMessage"
+                   FontFamily="Sitka Subheading"
+                   FontSize="15"
+                   Margin="25,0,25,25"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   TextAlignment="Center"
+                   FontWeight="Bold"
+                   TextWrapping="Wrap"
+                   Foreground="Black"/>
+
+        <!--Button Đồng ý-->
+        <Button Grid.Column="1" Grid.Row="1"
+                Width="100" Content="Đồng ý"
+                FontWeight="Bold"
+                Foreground="White"
+                FontSize="15"
+                Margin="0,0,120,25"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Background="ForestGreen"
+                FontFamily="Sitka Subheading"
+                Style="{StaticResource MaterialDesignRaisedButton}"
+                Click="OkButton_Click">
+        </Button>
+
+        <!--Button Hủy bỏ-->
+        <Button Grid.Column="1" Grid.Row="1"
+                Width="100" Content="Hủy bỏ"
+                FontWeight="Bold"
+                Foreground="White"
+                FontSize="15"
+                Margin="120,0,0,25"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Background="ForestGreen"
+                FontFamily="Sitka Subheading"
+                Style="{StaticResource MaterialDesignRaisedButton}"
+                Click="CancelButton_Click">
+        </Button>
+    </Grid>
+    
+</Window>

@@ -1,0 +1,298 @@
+﻿<Page x:Class="Management_System.ProductPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Management_System"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ProductPage">
+
+    <!--Reference của hàm chuyển đổi Price cho List View-->
+    <Page.Resources>
+        <local:PriceConverter x:Key="PriceConverter"/>
+    </Page.Resources>
+
+    <Grid>
+
+        <!--Nút backward-->
+        <Button
+            HorizontalAlignment="Left"
+            Background="Transparent"
+            BorderBrush="#303030"
+            VerticalAlignment="Top"
+            Height="25" Width="25"
+            Command="{x:Static NavigationCommands.BrowseBack}"
+            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+            <materialDesign:PackIcon
+                Kind="KeyboardArrowLeft"
+                Height="20"
+                Width="20" />
+        </Button>
+
+        <!--Nút forward-->
+        <Button
+            HorizontalAlignment="Left"
+            Background="Transparent"
+            BorderBrush="#303030"
+            VerticalAlignment="Top"
+            Height="25" Width="25"
+            Margin="28,0,0,0"
+            Command="{x:Static NavigationCommands.BrowseForward}"
+            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+            <materialDesign:PackIcon
+                Kind="KeyboardArrowRight"
+                Height="20"
+                Width="20" />
+        </Button>
+
+        <!--Tiêu đề-->
+        <Label Content="DANH SÁCH SẢN PHẨM"
+               FontFamily="Sitka Subheading"
+               Height="25"
+               FontSize="22"
+               Padding="0"
+               FontWeight="Bold"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Center" Grid.Column="1"/>
+
+        <!--Danh sách sản phẩm-->
+        <ListView Name="listProduct"
+                  Margin="2,80,2,0"
+                  PreviewMouseLeftButtonUp="ListProduct_PreviewMouseLeftButtonUp"
+                  Background="Transparent"
+                  BorderBrush="Transparent">
+            <!--Thiết lập cấu trúc sắp xếp các phần tử ListView-->
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="6" Rows="2">
+                    </UniformGrid>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
+            <!--Template hiển thị một sản phẩm-->
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <Border>
+                            <Border.Effect>
+                                <DropShadowEffect
+                                    Color="Black"
+                                    Direction="270"
+                                    ShadowDepth="1"
+                                    BlurRadius="10"/>
+                            </Border.Effect>
+                            <Image Source="{Binding Path=ImagePath}"
+                                   Stretch="UniformToFill"
+                                   Width="120" Height="120"
+                                   HorizontalAlignment="Center">
+                                <Image.Clip>
+                                    <EllipseGeometry
+                                        RadiusX="60"
+                                        RadiusY="60"
+                                        Center="60,60"/>
+                                </Image.Clip>
+                            </Image>
+                        </Border>
+                        <TextBlock Text="{Binding Path=Name}"
+                                   MaxWidth="120"
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap"
+                                   FontSize="13" Margin="0,5,0,0"
+                                   HorizontalAlignment="Center"
+                                   FontFamily="Sitka Subheading"
+                                   FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Path=Price, Converter={StaticResource PriceConverter}}"
+                                   FontFamily="Sitka Subheading"
+                                   HorizontalAlignment="Center"
+                                   Background="Red"
+                                   Foreground="White"
+                                   FontSize="10"
+                                   Padding="1">
+                                   <Bold><Underline>đ</Underline></Bold>
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!--Progressbar loading-->
+        <ProgressBar Width="25" Height="25"
+                     Style="{StaticResource MaterialDesignCircularProgressBar}"
+                     x:Name="ProgressBar">
+            <ProgressBar.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Value" From="0" To="100" Duration="0:0:1" RepeatBehavior="Forever"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </ProgressBar.Triggers>
+        </ProgressBar>
+        
+        <!--Thanh tìm kiếm-->
+        <TextBox Name="editSearchProduct"
+                 Width="195"
+                 VerticalAlignment="Top"
+                 Margin="0,45,600,10"
+                 FontSize="13"
+                 FontFamily="Sitka Subheading"
+                 materialDesign:HintAssist.Hint="Tìm kiếm tên sản phẩm" />
+
+        <!--Button tìm kiếm-->
+        <Button Name="btnSearchProduct"
+                Width="70" Content="Tìm kiếm"
+                FontWeight="Bold"
+                Foreground="White"
+                FontSize="13"
+                Padding="1" Height="25"
+                Margin="0,45,310,10"
+                VerticalAlignment="Top"
+                Background="ForestGreen"
+                FontFamily="Sitka Subheading"
+                Style="{StaticResource MaterialDesignRaisedButton}"
+                Click="BtnSearchProduct_Click"/>
+
+        <!--Sắp xếp-->
+        <ComboBox Name="comboProductArrange"
+                  Padding="2"
+                  FontSize="13"
+                  materialDesign:HintAssist.Hint="Sắp xếp theo giá cả"
+                  Margin="0,49,68,10"
+                  FontStyle="Italic"
+                  FontFamily="Sitka Subheading"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Top"
+                  SelectionChanged="ComboPageIndex_SelectionChanged"
+                  DropDownOpened="ComboProductTypes_DropDownOpened"
+                  DropDownClosed="ComboProductTypes_DropDownClosed"
+                  ItemsSource="{Binding LongListToTestComboVirtualization}">
+        </ComboBox>
+
+        <!--Lọc từ-->
+        <TextBox Width="80"
+                 Margin="200,32,0,0"
+                 FontSize="13"
+                 materialDesign:HintAssist.Hint="Từ"
+                 materialDesign:HintAssist.FloatingOffset="0,-15"
+                 materialDesign:HintAssist.FloatingScale=".95"
+                 VerticalAlignment="Top"
+                 TextChanged="Price_TextChanged"
+                 PreviewTextInput="NumberOnly_PreviewTextInput"
+                 FontFamily="Sitka Subheading"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 Name="editFilterFrom"/>
+
+        <!--Lọc đến-->
+        <TextBox Width="80"
+                 Margin="390,32,0,0"
+                 FontSize="13"
+                 materialDesign:HintAssist.Hint="Đến"
+                 materialDesign:HintAssist.FloatingOffset="0,-15"
+                 materialDesign:HintAssist.FloatingScale=".95"
+                 VerticalAlignment="Top"
+                 TextChanged="Price_TextChanged"
+                 PreviewTextInput="NumberOnly_PreviewTextInput"
+                 FontFamily="Sitka Subheading"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 Name="editFilterTo"/>
+
+        <!--Chỉ số trang hiện tại-->
+        <ComboBox Name="comboPageIndex"
+                  Padding="2"
+                  FontSize="13"
+                  Margin="560,49,0,10"
+                  FontWeight="Bold"
+                  BorderThickness="0,0,0,0"
+                  FontStyle="Italic"
+                  FontFamily="Sitka Subheading"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Top"
+                  DropDownOpened="ComboProductTypes_DropDownOpened"
+                  DropDownClosed="ComboProductTypes_DropDownClosed"
+                  SelectionChanged="ComboPageIndex_SelectionChanged"
+                  ItemsSource="{Binding LongListToTestComboVirtualization}">
+        </ComboBox>
+        
+        <!--Trang trước-->
+        <Button
+            Background="Transparent"
+            BorderBrush="#303030"
+            VerticalAlignment="Top"
+            Margin="650,42,0,0"
+            Height="25" Width="25"
+            Click="PreviousPage_Click"
+            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+            <materialDesign:PackIcon
+                Kind="KeyboardArrowLeft"
+                Height="20"
+                Width="20" />
+        </Button>
+
+        <!--Trang sau-->
+        <Button
+            Background="Transparent"
+            BorderBrush="#303030"
+            VerticalAlignment="Top"
+            Margin="710,42,0,0"
+            Height="25" Width="25"
+            Click="NextPage_Click"
+            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+            <materialDesign:PackIcon
+                Kind="KeyboardArrowRight"
+                Height="20"
+                Width="20" />
+        </Button>
+
+        <!--Button Import-->
+        <Button Height="20"
+                Width="50" Content="IMPORT"
+                FontWeight="Bold"
+                Foreground="White"
+                FontSize="9"
+                Padding="0"
+                Margin="0,0,18,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Background="ForestGreen"
+                FontFamily="Sitka Subheading"
+                Style="{StaticResource MaterialDesignRaisedButton}"
+                Click="BtnImportProduct_Click">
+        </Button>
+
+        <!--Button Export-->
+        <Button Height="20"
+                Width="50" Content="EXPORT"
+                FontWeight="Bold"
+                Foreground="White"
+                Padding="0"
+                FontSize="9"
+                Margin="0,0,73,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Background="ForestGreen"
+                FontFamily="Sitka Subheading"
+                Style="{StaticResource MaterialDesignRaisedButton}"
+                Click="BtnExportProduct_Click">
+        </Button>
+
+        <!--Button Thêm mới-->
+        <Button Height="20"
+                Width="50" Content="THÊM"
+                FontWeight="Bold"
+                Foreground="White"
+                Padding="0"
+                FontSize="9"
+                Margin="0,0,128,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Background="ForestGreen"
+                FontFamily="Sitka Subheading"
+                Style="{StaticResource MaterialDesignRaisedButton}"
+                Click="BtnNewProduct_Click">
+        </Button>
+
+    </Grid>
+</Page>

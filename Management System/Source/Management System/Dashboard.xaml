@@ -1,0 +1,86 @@
+﻿<Window x:Class="Management_System.Dashboard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Management_System"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Loaded="Dashboard_Loaded"
+        Title="Dashboard"
+        WindowStyle="None"
+        Height="528" Width="850"
+        MinHeight="528" MinWidth="850">
+    
+    <!--Chọn hình nền-->
+    <Window.Background>
+        <ImageBrush ImageSource="Images/Login/Background.png"/>
+    </Window.Background>
+
+    <Grid>
+        
+        <!--Action Bar-->
+        <materialDesign:ColorZone
+            MouseDown="ColorZone_MouseDown"
+            Mode="Dark"
+            Padding="5"
+            materialDesign:ShadowAssist.ShadowDepth="Depth2">
+            <Grid>
+                <!--Navigation-->
+                <ToggleButton
+                    Height="30" Width="30"
+                    HorizontalAlignment="Left"
+                    Style="{DynamicResource MaterialDesignHamburgerToggleButton}"/>
+                <!--Tiêu đề-->
+                <TextBlock
+                    Name="txtTitle"
+                    Text="Trang chủ"
+                    FontSize="15"
+                    FontFamily="Sitka Subheading"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"/>
+                <!--Bộ ba button minimize, maximize và close-->
+                <Button 
+                    Click="btnCommands_Click"
+                    Tag="btnClose"
+                    Height="20" Width="20"
+                    BorderBrush="OrangeRed"
+                    Opacity="0.8"
+                    Background="OrangeRed"
+                    HorizontalAlignment="Right"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+                    <materialDesign:PackIcon
+                        Kind="Close" Height="15" Width="15"/>
+                </Button>
+                <Button
+                    Click="btnCommands_Click"
+                    Tag="btnMaxim"
+                    Margin="0,0,25,0"
+                    Height="20" Width="20" Opacity="0.8"
+                    HorizontalAlignment="Right"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+                    <materialDesign:PackIcon
+                        Kind="WindowMaximize" Height="15" Width="15"/>
+                </Button>
+                <Button
+                    Click="btnCommands_Click"
+                    Tag="btnMinim"
+                    Margin="0,0,50,0"
+                    Height="20" Width="20" Opacity="0.8"
+                    HorizontalAlignment="Right"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+                    <materialDesign:PackIcon
+                        Kind="WindowMinimize" Height="15" Width="15"/>
+                </Button>
+            </Grid>
+        </materialDesign:ColorZone>
+
+        <!--Màn hình hiển thị nội dung-->
+        <DockPanel Margin="8,50,8,8">
+            <Frame x:Name="_mainFrame"
+                   NavigationUIVisibility="Hidden"/>
+        </DockPanel>
+
+    </Grid>
+    
+</Window>

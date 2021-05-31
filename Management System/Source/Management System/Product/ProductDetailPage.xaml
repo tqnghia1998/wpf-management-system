@@ -1,0 +1,425 @@
+﻿<Page x:Class="Management_System.ProductDetailPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Management_System"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ProductDetailPage">
+
+    <!--Reference của hàm chuyển đổi Price cho List View-->
+    <Page.Resources>
+        <local:PriceConverter x:Key="PriceConverter"/>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Nút backward-->
+        <Button
+            HorizontalAlignment="Left"
+            Background="Transparent"
+            BorderBrush="#303030"
+            VerticalAlignment="Top"
+            Height="25" Width="25"
+            Command="{x:Static NavigationCommands.BrowseBack}"
+            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+            <materialDesign:PackIcon
+                Kind="KeyboardArrowLeft"
+                Height="20"
+                Width="20" />
+        </Button>
+
+        <!--Nút forward-->
+        <Button
+            HorizontalAlignment="Left"
+            Background="Transparent"
+            BorderBrush="#303030"
+            VerticalAlignment="Top"
+            Height="25" Width="25"
+            Margin="28,0,0,0"
+            Command="{x:Static NavigationCommands.BrowseForward}"
+            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+            <materialDesign:PackIcon
+                Kind="KeyboardArrowRight"
+                Height="20"
+                Width="20" />
+        </Button>
+
+        <!--Tiêu đề-->
+        <Label Content="CHI TIẾT SẢN PHẨM" Grid.ColumnSpan="3"
+               FontFamily="Sitka Subheading"
+               Height="25"
+               FontSize="22"
+               Padding="0"
+               FontWeight="Bold"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Center"/>
+
+        <!--Tên sản phẩm-->
+        <TextBox Grid.Row="1"
+                 materialDesign:HintAssist.Hint="Tên sản phẩm"
+                 Width="180"
+                VerticalAlignment="Top"
+                 FontSize="15"
+                 Margin="10,20,0,0"
+                 IsReadOnly="True"
+                 Background="Transparent"
+                 FontFamily="Sitka Subheading"
+                 FontWeight="Bold"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 Text="Đây là tên sản phẩm"
+                 Name="editProductName"/>
+
+        <!--Mã sản phẩm-->
+        <TextBox Grid.Row="2"
+                 materialDesign:HintAssist.Hint="Mã sản phẩm"
+                 Width="180"
+                 FontSize="15"
+                 IsReadOnly="True"
+                 Margin="10,20,0,0"
+                 VerticalAlignment="Top"
+                 Background="Transparent"
+                 FontFamily="Sitka Subheading"
+                 FontWeight="Bold"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 Text="Đây là mã sản phẩm"
+                 Name="editProductId"/>
+
+        <!--Giá sản phẩm-->
+        <TextBox Grid.Row="3"
+                 Width="180"
+                 VerticalAlignment="Top"
+                 Margin="10,20,0,0"
+                 IsReadOnly="True"
+                 Text="Đây là giá sản phẩm"
+                 FontWeight="Bold"
+                 FontSize="15"
+                 FontFamily="Sitka Subheading"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 Name="editProductPrice">
+            <materialDesign:HintAssist.Hint>
+                <TextBlock>
+                    <Bold>Giá sản phẩm</Bold> (₫)
+                </TextBlock>
+            </materialDesign:HintAssist.Hint>
+        </TextBox>
+
+        <!--Loại sản phẩm-->
+        <TextBox Grid.Row="4"
+                 Width="180"
+                 Margin="10,20,0,0"
+                 VerticalAlignment="Top"
+                 IsReadOnly="True"
+                 Text="Đây là loại sản phẩm"
+                 FontWeight="Bold"
+                 FontSize="15"
+                 FontFamily="Sitka Subheading"
+                 materialDesign:HintAssist.Hint="Loại sản phẩm"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 Name="editProductType"/>
+
+        <!--Mô tả sản phẩm-->
+        <TextBox Grid.Row="5" Grid.RowSpan="2"
+            Width="180"
+            TextAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="10,20,0,0"
+            IsReadOnly="True"
+            FontSize="15"
+            FontWeight="Bold"
+            FontFamily="Sitka Subheading"
+            AcceptsReturn="True"
+            TextWrapping="Wrap"
+            VerticalScrollBarVisibility="Auto"
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            materialDesign:HintAssist.Hint="Mô tả sản phẩm"
+            Name="editProductDescription"/>
+
+        <!--Ngày nhập kho-->
+        <TextBox Grid.Row="1" Grid.Column="1"
+            Width="180"
+            IsReadOnly="True"
+            Margin="0,20,0,0"
+            FontSize="15"
+            FontWeight="Bold"
+            FontFamily="Sitka Subheading"
+            AcceptsReturn="True"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            VerticalScrollBarVisibility="Auto"
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            materialDesign:HintAssist.Hint="Ngày nhập kho"
+            Text="Đây là ngày nhập kho"
+            Name="editProductDate"/>
+
+        <!--Tồn kho-->
+        <TextBox Grid.Row="2" Grid.Column="1"
+            Width="180"
+            Margin="0,20,0,0"
+            IsReadOnly="True"
+            FontSize="15"
+            FontWeight="Bold"
+            FontFamily="Sitka Subheading"
+            AcceptsReturn="True"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            VerticalScrollBarVisibility="Auto"
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            materialDesign:HintAssist.Hint="Tồn kho hiện tại/ban đầu"
+            Text="Đây là tồn kho hiện tại"
+            Name="editAmount"/>
+
+        <!--Giá vốn-->
+        <TextBox Grid.Row="3" Grid.Column="1"
+            Width="180"
+            Margin="0,20,0,0"
+            IsReadOnly="True"
+            FontSize="15"
+            FontWeight="Bold"
+            FontFamily="Sitka Subheading"
+            AcceptsReturn="True"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            VerticalScrollBarVisibility="Auto"
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            Text="Đây là giá vốn"
+            Name="editCapital">
+            <materialDesign:HintAssist.Hint>
+                <TextBlock>
+                    <Bold>Giá vốn</Bold> (₫)
+                </TextBlock>
+            </materialDesign:HintAssist.Hint>
+        </TextBox>
+
+        <!--Ảnh sản phẩm-->
+        <Border Grid.Column="1" Grid.Row="4" Grid.RowSpan="3">
+            <Border.Effect>
+                <DropShadowEffect
+                                    Color="Black"
+                                    Direction="270"
+                                    ShadowDepth="1"
+                                    BlurRadius="10"/>
+            </Border.Effect>
+            <Image Stretch="UniformToFill"
+                   Width="150" Height="150"
+                   HorizontalAlignment="Center"
+                   Name="imgProduct"
+                   Source="../Images/NewProductPage/Image.png">
+                <Image.Clip>
+                    <EllipseGeometry
+                        RadiusX="75"
+                        RadiusY="75"
+                        Center="75,75"/>
+                </Image.Clip>
+            </Image>
+        </Border>
+
+        <!--Danh sách loại sản phẩm-->
+        <ListView Name="listBill" Grid.Row="1" Grid.RowSpan="5" Grid.Column="2"
+                  FontFamily="Sitka Subheading"
+                  FontSize="12"
+                  Margin="10,8,8,15"
+                  Foreground="Black"
+                  HorizontalAlignment="Left"
+                  PreviewMouseLeftButtonUp="ListBill_PreviewMouseLeftButtonUp">
+
+            <!--Nếu dài quá thì hiển thị...-->
+            <ListView.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Text}"/>
+                </Style>
+                <Style TargetType="{x:Type ScrollBar}">
+                    <Setter Property="Margin" Value="2,50,0,8" />
+                    <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ScrollBar}">
+                                <Track IsDirectionReversed="true" Focusable="false">
+                                    <Track.Thumb>
+                                        <Thumb Width="8" Background="Green"/>
+                                    </Track.Thumb>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="false" />
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="false" />
+                                    </Track.DecreaseRepeatButton>
+                                </Track>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.Resources>
+
+            <!--Thiết kế các cột-->
+            <ListView.View>
+                <GridView>
+                    <!--Cột tên khách hàng-->
+                    <GridViewColumn
+                        Width="130"
+                        DisplayMemberBinding="{Binding Name}">
+                        <GridViewColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <Border>
+                                    <Border.Effect>
+                                        <DropShadowEffect
+                                            Color="White"
+                                            Direction="270"
+                                            ShadowDepth="1"
+                                            BlurRadius="5"/>
+                                    </Border.Effect>
+                                    <Label Content="Tên KH"
+                                       Padding="1"
+                                       FontSize="13"
+                                       Foreground="Black"
+                                       FontWeight="Bold"/>
+                                </Border>
+                            </DataTemplate>
+                        </GridViewColumn.HeaderTemplate>
+                    </GridViewColumn>
+                    <!--Cột ngày mua-->
+                    <GridViewColumn
+                        Width="140"
+                        DisplayMemberBinding="{Binding Date}">
+                        <GridViewColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <Border>
+                                    <Border.Effect>
+                                        <DropShadowEffect
+                                            Color="White"
+                                            Direction="270"
+                                            ShadowDepth="1"
+                                            BlurRadius="5"/>
+                                    </Border.Effect>
+                                    <Label Content="Ngày"
+                                       Padding="1"
+                                       FontSize="13"
+                                       Foreground="Black"
+                                       FontWeight="Bold"/>
+                                </Border>
+                            </DataTemplate>
+                        </GridViewColumn.HeaderTemplate>
+                    </GridViewColumn>
+                    <!--Cột tiền nhận-->
+                    <GridViewColumn
+                        Width="100"
+                        DisplayMemberBinding="{Binding FinalPrice, Converter={StaticResource PriceConverter}}">
+                        <GridViewColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <Border>
+                                    <Border.Effect>
+                                        <DropShadowEffect
+                                            Color="White"
+                                            Direction="270"
+                                            ShadowDepth="1"
+                                            BlurRadius="5"/>
+                                    </Border.Effect>
+                                    <Label Content="Thu (đ)"
+                                       Padding="1"
+                                       FontSize="13"
+                                       Foreground="Black"
+                                       FontWeight="Bold"/>
+                                </Border>
+                            </DataTemplate>
+                        </GridViewColumn.HeaderTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+
+        </ListView>
+
+        <!--Button Thêm đơn hàng-->
+        <Button Grid.Column="2" Grid.Row="7"
+                Width="125" Content="Thêm đơn hàng"
+                FontWeight="Bold"
+                Padding="0"
+                Foreground="White"
+                FontSize="15"
+                Margin="0,0,200,30"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Background="ForestGreen"
+                FontFamily="Sitka Subheading"
+                Style="{StaticResource MaterialDesignRaisedButton}"
+                Click="BtnAddBill_Click"
+                Name="btnAddBill"/>
+        
+        <!--Button sửa-->
+        <Button Grid.Column="2" Grid.Row="7"
+                Width="50" Content="Sửa"
+                FontWeight="Bold"
+                Foreground="White"
+                FontSize="15"
+                Padding="0"
+                Margin="10,0,0,30"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Background="ForestGreen"
+                FontFamily="Sitka Subheading"
+                Style="{StaticResource MaterialDesignRaisedButton}"
+                Click="BtnEditProduct_Click"
+                Name="btnEditProduct"/>
+
+        <!--Button xóa-->
+        <Button Grid.Column="2" Grid.Row="7"
+                Width="50" Content="Xóa"
+                FontWeight="Bold"
+                Foreground="White"
+                FontSize="15"
+                Padding="0"
+                Margin="140,0,0,30"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Background="ForestGreen"
+                FontFamily="Sitka Subheading"
+                Style="{StaticResource MaterialDesignRaisedButton}"
+                Click="BtnRemoveProduct_Click"
+                Name="btnRemoveProduct"/>
+
+        <!--Button Thống kê-->
+        <Button Grid.Column="2" Grid.Row="7"
+                Width="80" Content="Thống kê"
+                FontWeight="Bold"
+                Foreground="White"
+                FontSize="15"
+                Padding="0"
+                Margin="300,0,0,30"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Background="ForestGreen"
+                FontFamily="Sitka Subheading"
+                Style="{StaticResource MaterialDesignRaisedButton}"
+                Click="BtnStatistic_Click"
+                Name="btnStatistic"/>
+
+        <!--Thông báo chưa có hóa đơn nào-->
+        <Label Content="Chưa có hóa đơn nào"
+               FontFamily="Sitka Subheading"
+               FontStyle="Italic" 
+               Grid.Column="2" Grid.Row="2"
+               VerticalAlignment="Bottom"
+               FontSize="13"
+               HorizontalAlignment="Center"
+               Name="noBillAnnounce"
+               Visibility="Hidden"/>
+
+    </Grid>
+</Page>
